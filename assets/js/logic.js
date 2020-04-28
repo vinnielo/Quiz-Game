@@ -32,7 +32,7 @@ var questions = [
     answer: "all of the above",
   },
   {
-    question: "quesion?",
+    question: "question?",
     choices: ["oranges", "carrots", "radish", "lettuce"],
     answer: "carrots",
   },
@@ -57,9 +57,15 @@ var questions = [
 // var lastQuestionsIndex = questions.length - 1;
 var questionIndex = 0;
 var getQuestion = function () {
+  //remove correct and wrong tags
+  var allChoicesEl = document.querySelectorAll(".choice");
+  for (i = 0; i < allChoicesEl.length; i++) {
+    allChoicesEl[i].classList.remove("correct");
+    allChoicesEl[i].classList.remove("wrong");
+  }
+  //build the question
   var questionEl = document.querySelector("#question-title");
   questionEl.textContent = questions[questionIndex].question;
-  // console.log('choice-1: ',questions[questionIndex].choices[0]);
   var choice1El = document.querySelector("#choice-1");
   choice1El.textContent = questions[questionIndex].choices[0];
   var choice2El = document.querySelector("#choice-2");
@@ -69,42 +75,21 @@ var getQuestion = function () {
   var choice4El = document.querySelector("#choice-4");
   choice4El.textContent = questions[questionIndex].choices[3];
   //mark the right answer with correct attribute
-  var allChoicesEl = document.querySelectorAll(".choice");
   var correctAnswer = questions[questionIndex].answer;
+  //tag the correct answer
   for (i = 0; i < allChoicesEl.length; i++) {
     var choiceText = allChoicesEl[i].textContent;
     //compare correct answer
-
     if (choiceText === correctAnswer) {
       allChoicesEl[i].classList.add("correct");
     } else {
       allChoicesEl[i].classList.add("wrong");
     }
-    
   }
 };
 
-function clearClass() {
-  allChoicesEl[i].classList.remove("correct");
-  allChoicesEl[i].classList.remove("wrong");
-}
-
 //handle timer function
 var time = 60;
-// function handleTimer() {
-//   //subtract time
-//   time--;
-
-//   //update time text
-//   var timeSpan = document.querySelector("#time");
-//   timeSpan.textContent = time;
-
-  
-
-//   //   if (time < 1) {
-//   //     clearInterval(handleTimer);
-//   //   }
-// }
 
 // need to stop timer at 0 --game over--
 
@@ -131,18 +116,30 @@ var startQuiz = function () {
   function handleTimer() {
     //subtract time
     time--;
-  
+
     //update time text
     var timeSpan = document.querySelector("#time");
     timeSpan.textContent = time;
-  
-    if(time === 0){
-        clearInterval(timeStop)
+
+    //stop time at zero
+    if (time === 0) {
+      //clear interval
+      clearInterval(timeStop);
+
+      //update url slug
+      //   window.location.href = "./highscores.html";
+
+      //5.when the timer reaches 0 it is game over. Hide questions and show total points and enter initials    
+      var questionDiv = document.querySelector("#questions");
+      questionDiv.classList.remove("show");
+      questionDiv.classList.add("hide");
+      var endScreen = document.querySelector("#end-screen");
+      endScreen.classList.remove("hide");
+      endScreen.classList.add("show");
     }
   }
 
-  //5.when the timer reaches 0 it is game over.
-
+  
 };
 
 var points = 0;
@@ -157,18 +154,41 @@ var answerButtonHandler = function () {
     console.log("current-points: ", points);
     localStorage.setItem("points", points);
   }
-  
 
   //3. if the answer choice is right display on screen then move to the next question
   questionIndex++;
+  //4. end the quiz
+  console.log("questionIndex: ", questionIndex);
+  if (questionIndex >= 10) {
+    //update url slug
+    // window.location.href = "./highscores.html";
+    var questionDiv = document.querySelector("#questions");
+    questionDiv.classList.remove("show");
+    questionDiv.classList.add("hide");
+    var endScreen = document.querySelector("#end-screen");
+    endScreen.classList.remove("hide");
+    endScreen.classList.add("show");
+  }
   getQuestion();
 
-  // 4. if answered incorrectly display on screen and 5 secs is subtracted from the clock
+  // 5. if answered incorrectly display on screen and 5 secs is subtracted from the clock
+  time = time - 5;
+  //update time text
+  var timeSpan = document.querySelector("#time");
+  timeSpan.textContent = time;
 };
 
-
-
+//add start quiz event listener
 var startButton = document.querySelector("#start");
 startButton.addEventListener("click", startQuiz);
-var choiceBtn = document.querySelector(".choice");
-choiceBtn.addEventListener("click", answerButtonHandler);
+
+//set parent delegator
+document
+  .querySelector("#questions")
+  .addEventListener("click", function (event) {
+    console.log("event.target", event.target.className);
+    //check if target element has class name choice
+    if (event.target.className.indexOf("choice") > -1) {
+      answerButtonHandler();
+    }
+  });
