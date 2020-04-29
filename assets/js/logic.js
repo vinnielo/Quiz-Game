@@ -116,8 +116,8 @@ var getQuestion = function () {
     endScreen.classList.add("show");
     var score = document.querySelector("#final-score");
     score.textContent = points;
-    var timerDiv = document.querySelector("#timer")
-    timerDiv.classList.add("hide");
+    // var timerDiv = document.querySelector("#timer")
+    // timerDiv.classList.add("hide");
     
   }
 };
