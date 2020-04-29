@@ -168,6 +168,8 @@ var startQuiz = function () {
       var endScreen = document.querySelector("#end-screen");
       endScreen.classList.remove("hide");
       endScreen.classList.add("show");
+      var timerDiv = document.querySelector("#timer");
+      timerDiv.classList.add("hide");
     }
   }
 };
