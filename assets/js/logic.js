@@ -195,7 +195,7 @@ var answerButtonHandler = function () {
 
 // local storage of initials
 
- player = JSON.parse(localStorage.getItem("player"))
+  player = JSON.parse(localStorage.getItem("player"))
 
 
 function endGame() {
@@ -231,6 +231,3 @@ document
 var endGameButton = document.querySelector("#submit");
 endGameButton.addEventListener("click", endGame);
 
-// We need to create an array to accept/push username + score
-// Username + score should be an object
-// once the array is populated, call localstorage method and give it a key of scoreboard with value of the array, while we stringfy the arry so localstorage can accept the value.

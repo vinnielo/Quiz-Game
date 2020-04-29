@@ -10,7 +10,7 @@ var playerList = document.querySelector("#highscores1");
        user = storedPlayer[i];
   
       h2El = document.createElement("h2");
-      h2El.textContent = user.initials + "-" + user.score;
+      h2El.textContent = user.initials + "-" + user.score ;
       playerList.appendChild(h2El);
     }
   }
