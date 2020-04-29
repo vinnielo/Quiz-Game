@@ -1,5 +1,5 @@
 var playerList = document.querySelector("#highscores1");
-var clearBtn = document.querySelector("#clear");
+// var clearBtn = document.querySelector("#clear");
     
     
   
@@ -16,7 +16,8 @@ var clearBtn = document.querySelector("#clear");
   }
 
 //   clearBtn.addEventListener("click", function(){
-//       clear()
+//       localStorage.removeItem("player")
+//       playerList.textContent = "";
 //   })
 
 
