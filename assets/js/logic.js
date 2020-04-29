@@ -1,67 +1,85 @@
 var shuffledQuest, questions;
+var initInput = document.querySelector("#initials");
+
+var player = [];
 
 var questions = [
   {
-    question: "What is Jose's favorite animal?",
-    choices: ["dog", "cat", "bird", "lizzard"],
-    answer: "dog",
+    question: "HTML is a subset of...",
+    choices: ["SGMD", "SGML", "SGMH", "none of the above"],
+    answer: "SGML",
   },
   {
-    question: "What orange vegetable do rabbits like to eat?",
-    choices: ["oranges", "carrots", "radish", "lettuce"],
-    answer: "carrots",
+    question: "What does the <br> tag add to your webpage?",
+    choices: ["Long-break", "Paragraph-break", "Line-break", "none"],
+    answer: "Line-break",
   },
   {
-    question: "How much wood would a Woodchuck Chuck?",
-    choices: ["one", "five", "many", "stupid question"],
-    answer: "stupid question",
+    question: "The first tag inside <TABLE> is",
+    choices: ["<HEAD>", "<CAPTION>", "<TH>", "<TD>"],
+    answer: "<CAPTION>",
   },
   {
-    question: "How are you feeling today?",
-    choices: ["happy", "blue", "sick", "blah"],
-    answer: "happy",
+    question: "Which of these can be returned by the operator &",
+    choices: ["Integer", "Boolean", "Character", "Integer/Boolean"],
+    answer: "Integer/Boolean",
   },
   {
-    question: "But why?",
-    choices: ["you", "please", "tell", "me"],
-    answer: "please",
+    question: "Which tag tells the browser where the page starts and stops?",
+    choices: ["<html>", "<body>", "<head>", "<title>"],
+    answer: "<html>",
   },
   {
-    question: "How has JS affect you?",
-    choices: ["hair ripping", "love it", "frustrated", "all of the above"],
-    answer: "all of the above",
+    question: " How to sort an array?",
+    choices: [
+      "Array.sort()",
+      "Arrays.sort()",
+      "Collection.sort()",
+      "System.sort(",
+    ],
+    answer: "Arrays.sort()",
   },
   {
-    question: "question?",
-    choices: ["oranges", "carrots", "radish", "lettuce"],
-    answer: "carrots",
+    question: "How to copy contents of array?",
+    choices: [
+      "System.arrayCopy()",
+      "Array.copy(",
+      "Arrays.copy()",
+      "Collection.copy()",
+    ],
+    answer: "System.arrayCopy()",
   },
   {
-    question: "question2?",
-    choices: ["oranges", "carrots", "radish", "lettuce"],
-    answer: "carrots",
+    question: "Which tag will you add to specify a font for your whole page?",
+    choices: ["<defaultfont>", "<targetfont>", "<basefont>", "<font>"],
+    answer: "<defaultfont>",
   },
   {
-    question: "question3?",
-    choices: ["oranges", "carrots", "radish", "lettuce"],
-    answer: "carrots",
+    question: "Where is an array stored in memory",
+    choices: [
+      "heap space",
+      "stack space",
+      "heap space and stack space",
+      "first generation memory",
+    ],
+    answer: "heap space",
   },
   {
-    question: "peter piper, what kind of peppers did he pick?",
-    choices: ["oranges", "carrots", "radish", "lettuce"],
-    answer: "carrots",
+    question:
+      "An array elements are always stored in ________ memory locations.",
+    choices: ["Sequential", "Random", "Sequential and Random", "Binary search"],
+    answer: "Sequential",
   },
 ];
 
 //update the html with question data from questions
-// var lastQuestionsIndex = questions.length - 1;
+
 var questionIndex = 0;
 var getQuestion = function () {
   //remove correct and wrong tags
   var allChoicesEl = document.querySelectorAll(".choice");
   for (i = 0; i < allChoicesEl.length; i++) {
     allChoicesEl[i].classList.remove("correct");
-    allChoicesEl[i].classList.remove("wrong");
   }
   //build the question
   var questionEl = document.querySelector("#question-title");
@@ -83,8 +101,21 @@ var getQuestion = function () {
     if (choiceText === correctAnswer) {
       allChoicesEl[i].classList.add("correct");
     } else {
-      allChoicesEl[i].classList.add("wrong");
     }
+  }
+  questionIndex++;
+
+  if (questionIndex === 10) {
+    //update url slug
+    // window.location.href = "./highscores.html";
+    var questionDiv = document.querySelector("#questions");
+    questionDiv.classList.remove("show");
+    questionDiv.classList.add("hide");
+    var endScreen = document.querySelector("#end-screen");
+    endScreen.classList.remove("hide");
+    endScreen.classList.add("show");
+    var score = document.querySelector("#final-score");
+    score.textContent = points;
   }
 };
 
@@ -129,7 +160,7 @@ var startQuiz = function () {
       //update url slug
       //   window.location.href = "./highscores.html";
 
-      //5.when the timer reaches 0 it is game over. Hide questions and show total points and enter initials    
+      //5.when the timer reaches 0 it is game over. Hide questions and show total points and enter initials
       var questionDiv = document.querySelector("#questions");
       questionDiv.classList.remove("show");
       questionDiv.classList.add("hide");
@@ -138,45 +169,47 @@ var startQuiz = function () {
       endScreen.classList.add("show");
     }
   }
-
-  
 };
 
 var points = 0;
 var answerButtonHandler = function () {
   console.log("answer click handle working");
   //1. check if the choice is right
-  var eventTargetChoice = document.querySelector(event.target.nodeName);
+  var eventTargetChoice = event.target;
   console.log(eventTargetChoice);
-  if (eventTargetChoice.classList.contains("correct") > -1) {
+  if (eventTargetChoice.classList.contains("correct")) {
     //2. correct answer count ++
     points++;
-    console.log("current-points: ", points);
-    localStorage.setItem("points", points);
+
+    console.log(points);
+  } else {
+    // 3. if answered incorrectly 5 secs is subtracted from the clock
+    time = time - 5;
+    //update time text
+    var timeSpan = document.querySelector("#time");
+    timeSpan.textContent = time;
   }
 
-  //3. if the answer choice is right display on screen then move to the next question
-  questionIndex++;
-  //4. end the quiz
-  console.log("questionIndex: ", questionIndex);
-  if (questionIndex >= 10) {
-    //update url slug
-    // window.location.href = "./highscores.html";
-    var questionDiv = document.querySelector("#questions");
-    questionDiv.classList.remove("show");
-    questionDiv.classList.add("hide");
-    var endScreen = document.querySelector("#end-screen");
-    endScreen.classList.remove("hide");
-    endScreen.classList.add("show");
-  }
   getQuestion();
-
-  // 5. if answered incorrectly display on screen and 5 secs is subtracted from the clock
-  time = time - 5;
-  //update time text
-  var timeSpan = document.querySelector("#time");
-  timeSpan.textContent = time;
 };
+
+// local storage of initials
+
+function storePlayer() {
+  localStorage.setItem("player", JSON.stringify(player));
+}
+
+function endGame() {
+  event.preventDefault();
+
+  var initText = initInput.value.trim();
+
+  player.push(initText);
+  player.push(points);
+  initInput.value = "";
+  storePlayer()
+  console.log(player);
+}
 
 //add start quiz event listener
 var startButton = document.querySelector("#start");
@@ -192,3 +225,10 @@ document
       answerButtonHandler();
     }
   });
+
+var endGameButton = document.querySelector("#submit");
+endGameButton.addEventListener("click", endGame);
+
+// We need to create an array to accept/push username + score
+// Username + score should be an object
+// once the array is populated, call localstorage method and give it a key of scoreboard with value of the array, while we stringfy the arry so localstorage can accept the value.
