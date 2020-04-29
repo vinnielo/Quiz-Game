@@ -195,8 +195,10 @@ var answerButtonHandler = function () {
 
 // local storage of initials
 
-  player = JSON.parse(localStorage.getItem("player"))
+  if(JSON.parse(localStorage.getItem("player")) !== null) { player = JSON.parse(localStorage.getItem("player"))
 
+  }
+console.log(player)
 
 function endGame() {
   event.preventDefault();
