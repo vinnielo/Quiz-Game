@@ -1,26 +1,25 @@
-function init() {
+var playerList = document.querySelector("#highscores1");
+// var clearBtn = document.querySelector("#clear");
     
-   JSON.parse(localStorage.getItem("player"));
+    
   
-    
-    // Render todos to the DOM
-    renderInit();
-  }
 
   function renderInit() {
-      
-    // Render a new li for each todo
-    for (var i = 0; i < player.length; i++) {
-      var play = player[i];
+      var storedPlayer = JSON.parse(localStorage.getItem("player"));
+    for (var i = 0; i < storedPlayer.length; i++) {
+       user = storedPlayer[i];
   
-      var li = document.createElement("li");
-      li.textContent = player;
-      li.setAttribute("data-index", i);
-  
-     
-    
-  
-     
-      player.appendChild(li);
+      h2El = document.createElement("h2");
+      h2El.textContent = user.initials + "-" + user.score;
+      playerList.appendChild(h2El);
     }
   }
+
+//   clearBtn.addEventListener("click", function(){
+//       localStorage.removeItem("player")
+//       playerList.textContent = "";
+//   })
+
+
+
+  renderInit();

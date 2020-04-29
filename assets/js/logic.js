@@ -116,6 +116,7 @@ var getQuestion = function () {
     endScreen.classList.add("show");
     var score = document.querySelector("#final-score");
     score.textContent = points;
+    
   }
 };
 
@@ -191,25 +192,27 @@ var answerButtonHandler = function () {
   }
 
   getQuestion();
+ 
 };
 
 // local storage of initials
 
-function storePlayer() {
-  localStorage.setItem("player", JSON.stringify(player));
-}
+ player = JSON.parse(localStorage.getItem("player"))
+
 
 function endGame() {
   event.preventDefault();
-
+  
   var initText = initInput.value.trim();
 
-  player.push("Inititals: " + initText);
-  player.push("score: " + points);
-  
+  var newScore= {
+      initials: initText,
+      score: points
+  }
+  player.push(newScore);  
   initInput.value = "";
-  storePlayer()
-  
+  localStorage.setItem("player", JSON.stringify(player));
+  window.location.href = "./highscores.html";
 }
 
 //add start quiz event listener
