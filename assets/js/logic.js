@@ -76,7 +76,7 @@ var questions = [
 
 var questionIndex = 0;
 var getQuestion = function () {
-  //remove correct and wrong tags
+  //remove correct tags
   var allChoicesEl = document.querySelectorAll(".choice");
   for (i = 0; i < allChoicesEl.length; i++) {
     allChoicesEl[i].classList.remove("correct");
@@ -106,8 +106,7 @@ var getQuestion = function () {
   questionIndex++;
 
   if (questionIndex === 10) {
-    //update url slug
-    // window.location.href = "./highscores.html";
+   
     var questionDiv = document.querySelector("#questions");
     questionDiv.classList.remove("show");
     questionDiv.classList.add("hide");
@@ -160,32 +159,28 @@ var startQuiz = function () {
       //clear interval
       clearInterval(timeStop);
 
-      //update url slug
-      //   window.location.href = "./highscores.html";
-
       //5.when the timer reaches 0 it is game over. Hide questions and show total points and enter initials
       var questionDiv = document.querySelector("#questions");
       questionDiv.classList.remove("show");
       questionDiv.classList.add("hide");
       var endScreen = document.querySelector("#end-screen");
       endScreen.classList.remove("hide");
-      endScreen.classList.add("show");
-      
+      endScreen.classList.add("show");      
     }
   }
 };
 
 var points = 0;
 var answerButtonHandler = function () {
-  console.log("answer click handle working");
+//   console.log("answer click handle working");
   //1. check if the choice is right
   var eventTargetChoice = event.target;
-  console.log(eventTargetChoice);
+//   console.log(eventTargetChoice);
   if (eventTargetChoice.classList.contains("correct")) {
     //2. correct answer count ++
     points++;
 
-    console.log(points);
+    // console.log(points);
   } else {
     // 3. if answered incorrectly 5 secs is subtracted from the clock
     time = time - 5;
@@ -226,7 +221,7 @@ startButton.addEventListener("click", startQuiz);
 document
   .querySelector("#questions")
   .addEventListener("click", function (event) {
-    console.log("event.target", event.target.className);
+    // console.log("event.target", event.target.className);
     //check if target element has class name choice
     if (event.target.className.indexOf("choice") > -1) {
       answerButtonHandler();
