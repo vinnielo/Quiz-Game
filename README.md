@@ -5,10 +5,10 @@ The quiz consists of 10 questions and the final page allows the player to enter 
 
 preview:
 
-![](images\quizgame.PNG) 
-![](images\screen1.PNG)
-![](images\initialspg.PNG)
-![](images\HSpage.PNG)
+![main screen of quiz](images/quizgame.PNG) 
+![questions](images/screen1.PNG)
+![initial page](images/initialspg.PNG)
+![scoreboard](images/HSpage.PNG)
 
 
 this was by far one of the hardest assignments. I feel good that I completed it. 
