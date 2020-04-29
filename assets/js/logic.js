@@ -204,11 +204,12 @@ function endGame() {
 
   var initText = initInput.value.trim();
 
-  player.push(initText);
-  player.push(points);
+  player.push("Inititals: " + initText);
+  player.push("score: " + points);
+  
   initInput.value = "";
   storePlayer()
-  console.log(player);
+  
 }
 
 //add start quiz event listener
